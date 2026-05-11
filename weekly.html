@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Report | KITSO KGOLO TUITIONS</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f0f2f5; color:#333; padding:1.5rem 1rem; }
+        .container { max-width:800px; margin:0 auto; background:white; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); overflow:hidden; }
+        .top-bar { background:#1a1a2e; text-align:center; padding:1.2rem; }
+        .top-bar img { height:70px; margin-bottom:0.3rem; }
+        .panel { padding:2rem; }
+        h1 { text-align:center; margin-bottom:1.5rem; color:#0f3460; font-size:1.5rem; }
+        label { font-weight:600; display:block; margin-bottom:0.3rem; }
+        input, textarea { width:100%; padding:0.8rem; border:1px solid #ddd; border-radius:8px; font-family:inherit; font-size:1rem; margin-bottom:1rem; }
+        textarea { resize:vertical; min-height:60px; }
+        .subject-row { background:#f8f9fa; padding:1rem; border-radius:12px; margin-bottom:1rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-start; }
+        .field { flex:1 1 150px; }
+        .btn { border:none; padding:0.8rem 1.8rem; border-radius:50px; font-weight:600; cursor:pointer; font-size:0.95rem; transition:all 0.2s; margin:0.25rem; }
+        .btn-outline { background:white; border:2px solid #0f3460; color:#0f3460; }
+        .btn-outline:hover { background:#f0f5ff; }
+        .btn-primary { background:#0f3460; color:white; }
+        .btn-primary:hover { background:#1a1a2e; }
+        .btn-success { background:#27ae60; color:white; }
+        .btn-success:hover { background:#219a52; }
+        .btn-danger { background:#e94560; color:white; }
+        .btn-danger:hover { background:#c23152; }
+        .action-buttons { margin-top:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; }
+        .report-section { display:none; margin-top:1.5rem; padding:2rem; border:1px dashed #ccc; border-radius:16px; background:#fafafa; }
+        table { width:100%; border-collapse:collapse; margin:1.5rem 0; }
+        th, td { border:1px solid #ccc; padding:0.7rem; text-align:left; vertical-align:top; }
+        th { background:#0f3460; color:white; }
+        .report-meta { display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:500; }
+        .signature-line { margin-top:3rem; display:flex; justify-content:space-between; }
+        .signature-line div { border-top:1px solid #333; width:40%; padding-top:0.5rem; text-align:center; }
+        /* Print: hide form, show report with logo */
+        @media print {
+            body { background:white; padding:0; }
+            .container { box-shadow:none; max-width:100%; border-radius:0; }
+            .top-bar, .panel { display:none; }
+            .report-section { display:block!important; border:none; padding:0; margin:0; background:white; }
+            .print-logo { display:block!important; text-align:center; margin-bottom:1rem; }
+            .print-logo img { height:70px; }
+        }
+        .print-logo { display:none; }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="top-bar">
+            <img src="KITSO KGOLO TUITIONS.jpeg" alt="KITSO KGOLO TUITIONS Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display:none; color:white; font-weight:bold; font-size:1.3rem;">KITSO KGOLO TUITIONS</div>
+        </div>
+
+        <nav style="background:#0f3460; padding:0.6rem 2rem; text-align:center; display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
+            <a href="weekly.html" style="color:white; text-decoration:none; font-weight:600; font-size:1rem; padding:0.3rem 0;">📋 Weekly</a>
+            <a href="monthly.html" style="color:white; text-decoration:none; font-weight:600; font-size:1rem; padding:0.3rem 0;">📆 Monthly</a>
+            <a href="reports.html" style="color:white; text-decoration:none; font-weight:600; font-size:1rem; padding:0.3rem 0;">📚 Term</a>
+        </nav>
+
+        <div class="panel">
+            <h1>📋 Weekly Student Report</h1>
+            <div id="weeklyForm">
+                <label for="weekStudentName">Student Name</label>
+                <input type="text" id="weekStudentName" placeholder="Full name">
+                <div id="weeklySubjects"></div>
+                <button class="btn btn-outline" id="addWeeklySubjectBtn">+ Add Subject</button>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="generateWeeklyBtn">Generate Weekly Report</button>
+                </div>
+            </div>
+            <div class="report-section" id="weeklyReportSection">
+                <div class="print-logo"><img src="KITSO KGOLO TUITIONS.jpeg" alt="Logo"></div>
+                <div id="weeklyReportContent"></div>
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="window.print()">🖨️ Print / Save as PDF</button>
+                    <button class="btn btn-outline" id="backWeeklyBtn">← Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const weeklySubjectsDiv = document.getElementById('weeklySubjects');
+        function createWeeklyRow() {
+            const row = document.createElement('div');
+            row.className = 'subject-row';
+            row.innerHTML = `
+                <div class="field"><label>Subject</label><input type="text" class="sub-name" placeholder="e.g., Maths"></div>
+                <div class="field"><label>Performance</label><textarea class="performance" rows="2" placeholder="How did they do?"></textarea></div>
+                <div class="field"><label>Recommendations</label><textarea class="recommendation" rows="2" placeholder="Advice"></textarea></div>
+                <button type="button" class="btn btn-danger remove-row">✕</button>`;
+            row.querySelector('.remove-row').addEventListener('click', ()=>{
+                if(weeklySubjectsDiv.children.length>1) row.remove(); else alert('Need at least one subject.');
+            });
+            return row;
+        }
+        weeklySubjectsDiv.appendChild(createWeeklyRow());
+        document.getElementById('addWeeklySubjectBtn').addEventListener('click', ()=>weeklySubjectsDiv.appendChild(createWeeklyRow()));
+        document.getElementById('generateWeeklyBtn').addEventListener('click', ()=>{
+            const name=document.getElementById('weekStudentName').value.trim();
+            if(!name){alert('Enter student name');return;}
+            const rows=document.querySelectorAll('#weeklySubjects .subject-row');
+            const subjects=[]; let valid=true;
+            rows.forEach(r=>{
+                const n=r.querySelector('.sub-name').value.trim();
+                if(!n){alert('All subjects need a name');valid=false;return;}
+                subjects.push({name:n, perf:r.querySelector('.performance').value.trim(), rec:r.querySelector('.recommendation').value.trim()});
+            });
+            if(!valid)return;
+            const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+            const week=Math.ceil((new Date()-new Date(new Date().getFullYear(),0,1))/604800000);
+            const esc=s=>String(s).replace(/</g,'&lt;');
+            document.getElementById('weeklyReportContent').innerHTML=`
+                <div class="report-meta"><span><strong>Student:</strong> ${esc(name)}</span><span><strong>Date:</strong> ${today} (Week ${week})</span></div>
+                <table><thead><tr><th>Subject</th><th>Performance</th><th>Recommendations</th></tr></thead>
+                <tbody>${subjects.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.perf)||'—'}</td><td>${esc(s.rec)||'—'}</td></tr>`).join('')}</tbody></table>
+                <div class="signature-line"><div>Teacher</div><div>Parent</div></div>`;
+            document.getElementById('weeklyForm').style.display='none';
+            document.getElementById('weeklyReportSection').style.display='block';
+        });
+        document.getElementById('backWeeklyBtn').addEventListener('click',()=>{
+            document.getElementById('weeklyForm').style.display='block';
+            document.getElementById('weeklyReportSection').style.display='none';
+        });
+    </script>
+</body>
+</html>
