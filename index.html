@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KITSO KGOLO TUITIONS</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:#f0f2f5;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:1.5rem;
+        }
+        .welcome-card {
+            background:white;
+            border-radius:20px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.1);
+            text-align:center;
+            padding:3rem 2rem;
+            max-width:550px;
+            width:100%;
+        }
+        .welcome-card img {
+            height:100px;
+            margin-bottom:1rem;
+        }
+        .welcome-card .school-name {
+            font-size:2rem;
+            font-weight:bold;
+            color:#1a1a2e;
+            letter-spacing:1px;
+        }
+        .welcome-card .motto {
+            font-style:italic;
+            color:#e94560;
+            margin:0.5rem 0 2rem 0;
+            font-size:1.1rem;
+        }
+        .welcome-card .subtitle {
+            color:#555;
+            margin-bottom:2rem;
+            font-size:1rem;
+        }
+        .report-links {
+            display:flex;
+            flex-direction:column;
+            gap:0.8rem;
+        }
+        .report-links a {
+            display:block;
+            padding:1rem;
+            border-radius:12px;
+            text-decoration:none;
+            font-weight:600;
+            font-size:1.1rem;
+            transition:all 0.2s;
+        }
+        .link-weekly {
+            background:#0f3460;
+            color:white;
+        }
+        .link-weekly:hover { background:#1a1a2e; }
+        .link-monthly {
+            background:#16213e;
+            color:white;
+        }
+        .link-monthly:hover { background:#1a1a2e; }
+        .link-term {
+            background:#e94560;
+            color:white;
+        }
+        .link-term:hover { background:#c23152; }
+    </style>
+</head>
+<body>
+    <div class="welcome-card">
+        <img src="logo.png" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div style="display:none; font-size:2rem; font-weight:bold; color:#1a1a2e;">KITSO KGOLO TUITIONS</div>
+        <div class="school-name">KITSO KGOLO TUITIONS</div>
+        <div class="motto">"Setshwarwa ke ntsha pedi ga se thata"</div>
+        <div class="subtitle">📋 Student Report System</div>
+        <div class="report-links">
+            <a href="weekly-report.html" class="link-weekly">📋 Weekly Report</a>
+            <a href="monthly-report.html" class="link-monthly">📆 Monthly Report</a>
+            <a href="term-report.html" class="link-term">📚 Term Report</a>
+        </div>
+    </div>
+</body>
+</html>
